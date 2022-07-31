@@ -1,0 +1,51 @@
+<div class="container">
+  <h4>{{title}}</h4>
+  <div class="form-group">
+    <form class ="example-search-form">
+      <mat-form-field class="example-full-width" appearance="legacy">
+        <input matInput placeholder="Search Nearest Location" autocorrect="on" autocapitalize="off" spellcheck="off"
+               #search>
+      </mat-form-field>
+    </form>
+  </div>
+
+  <div class="container">
+      <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+        <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true" [markerClickable]="true"
+                    (dragEnd)="markerDragEnd($event)" (markerClick)="clickedMarker(infoWindow)">
+          <agm-info-window #infoWindow>
+            <strong> {{address}}</strong>
+          </agm-info-window>
+        </agm-marker>
+      </agm-map>
+  </div>
+
+  <pre></pre>
+  <form [formGroup]="myForm">
+
+    <mat-form-field>
+      <input matInput placeholder="FullName:" formControlName="fullName">
+    </mat-form-field>
+    <pre></pre>
+    <mat-form-field>
+      <input matInput placeholder="Phone Number:" formControlName="phoneNumber">
+    </mat-form-field>
+    <pre></pre>
+    <mat-form-field>
+      <input matInput placeholder="Email:" formControlName="email" autocomplete="on">
+      <mat-error *ngIf="email?.invalid">
+        Your email does not look right
+      </mat-error>
+    </mat-form-field>
+
+    <pre></pre>
+    <div>Pick Up Address: {{address}}</div>
+    <div>Latitude: {{latitude}}</div>
+    <div>Longitude: {{longitude}}</div>
+    <div>FullName: {{fullName?.value}}</div>
+    <div>Phone Number: {{phoneNumber?.value}}</div>
+    <div>Email: {{email?.value}}</div>
+    <pre></pre>
+    <button mat-flat-button color="primary" type="submit" [disabled]="myForm.invalid" (click)="onSend() ">Send Location</button>
+  </form>
+</div>
