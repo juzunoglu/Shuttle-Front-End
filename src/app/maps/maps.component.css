@@ -1,6 +1,22 @@
 agm-map {
   height: 300px;
+  width: 70%;
 }
 mat-form-field {
   width: 70%;
 }
+
+mat-form-field {
+  width: 100%;
+}
+.mat-calendar-body-cell.selected > .mat-calendar-body-cell-content,
+.mat-calendar-body-cell.selected:hover > .mat-calendar-body-cell-content,
+.mat-calendar-body-cell.selected > .mat-calendar-body-cell-content:hover {
+  background-color: #673ab7 !important;
+  color: #fff !important;
+}
+.custom.mat-card{
+ margin: 30px; padding: 30px;
+}
+
+

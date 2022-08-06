@@ -3,6 +3,7 @@ import {EmployeeInfo} from "../model/address.model";
 import {MapsAPILoader} from "@agm/core";
 import {UserInfoService} from "../service/user-info.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {MatDatepicker, MatDatepickerInputEvent} from "@angular/material/datepicker";
 
 @Component({
   selector: 'app-maps',
@@ -19,12 +20,57 @@ export class MapsComponent implements OnInit {
   employeeInfo: EmployeeInfo = new EmployeeInfo();
   private geoCoder: google.maps.Geocoder | undefined;
 
+  // date picker related
+  public CLOSE_ON_SELECTED = false;
+  public init = new Date();
+  public resetModel = new Date(0);
+  public model = [];
+
   // @ts-ignore
   myForm: FormGroup;
 
   @ViewChild('search')
   public searchElementRef: ElementRef = new ElementRef("");
+  // @ts-ignore
+  @ViewChild('picker', { static: true }) _picker: MatDatepicker<Date>;
 
+  public dateClass = (date: Date) => {
+    if (this._findDate(date) !== -1) {
+      return [ 'selected' ];
+    }
+    return [ ];
+  }
+
+  public dateChanged(event: MatDatepickerInputEvent<Date>): void {
+    if (event.value) {
+      const date = event.value;
+      const index = this._findDate(date);
+      if (index === -1) {
+        // @ts-ignore
+        this.model.push(date);
+      } else {
+        this.model.splice(index, 1)
+      }
+      this.resetModel = new Date(0);
+      if (!this.CLOSE_ON_SELECTED) {
+        const closeFn = this._picker.close;
+        this._picker.close = () => { };
+        this._picker['_componentRef'].instance._calendar.monthView._createWeekCells();
+        setTimeout(() => {
+          this._picker.close = closeFn;
+        });
+      }
+    }
+  }
+
+  public remove(date: Date): void {
+    const index = this._findDate(date);
+    this.model.splice(index, 1)
+  }
+
+  private _findDate(date: Date): number {
+    return this.model.map((m) => +m).indexOf(+date);
+  }
 
   constructor(
     private mapsAPILoader: MapsAPILoader,

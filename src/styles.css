@@ -2,3 +2,11 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+footer {
+  position:fixed;
+  bottom:0;
+  background-color:cornflowerblue;
+  width:100%;
+  transition: all .4s;
+  box-shadow: 0 0 1px rgba(50,58,70,.1);
+}
