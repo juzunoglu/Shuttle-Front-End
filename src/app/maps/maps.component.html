@@ -43,10 +43,10 @@
 
      <div class="container">
        <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
-         <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true" [markerClickable]="true"
+         <agm-marker *ngFor="let marker of markers" [latitude]="marker.lat" [longitude]="marker.lng" [markerDraggable]="true" [markerClickable]="true"
                      (dragEnd)="markerDragEnd($event)" (markerClick)="clickedMarker(infoWindow)">
            <agm-info-window #infoWindow>
-             <strong> {{address}}</strong>
+             <strong> {{marker.label}}</strong>
            </agm-info-window>
          </agm-marker>
        </agm-map>
@@ -71,15 +71,16 @@
            Your email does not look right
          </mat-error>
        </mat-form-field>
-<!--       <pre></pre>-->
+       <pre></pre>
 <!--       <div>Pick Up Address: {{address}}</div>-->
 <!--       <div>Latitude: {{latitude}}</div>-->
 <!--       <div>Longitude: {{longitude}}</div>-->
 <!--       <div>FullName: {{fullName?.value}}</div>-->
 <!--       <div>Phone Number: {{phoneNumber?.value}}</div>-->
 <!--       <div>Email: {{email?.value}}</div>-->
-<!--       <pre></pre>-->
-       <button mat-flat-button color="primary" type="submit" [disabled]="myForm.invalid" (click)="onSend() ">Send Location
+       <pre></pre>
+       <button mat-flat-button color="primary" type="submit" [disabled]="myForm.invalid" (click)="onSend() ">
+         Send Location
        </button>
      </form>
    </mat-card-content>

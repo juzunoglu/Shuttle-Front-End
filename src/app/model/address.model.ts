@@ -7,6 +7,7 @@ export class Address {
 
 export class EmployeeInfo {
 
+  comingDates: Date[] | undefined;
   longitude: number | undefined;
   latitude: number | undefined;
   fullAddress: string | undefined;

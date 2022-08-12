@@ -1,0 +1,56 @@
+<mat-toolbar color="primary">
+  <span>Driver Information</span>
+  <div fxHide.lt-md>
+    <span class="column-label">Columns</span>
+    <mat-slider [max]="6" [min]="1" [(ngModel)]="gridColumns" [thumbLabel]="true">
+    </mat-slider>
+  </div>
+</mat-toolbar>
+
+<div class="content">
+  <div fxlayout="row-wrap" fxLayoutGap="16px grid">
+    <div [fxFlex]="(100/gridColumns) + '%'" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let driver of drivers">
+      <mat-card class="mat-elevation-z4" >
+        <mat-card-header>
+          <mat-card-title class="title_center">Name: {{driver.name}}</mat-card-title>
+        </mat-card-header>
+        <img mat-card-image [src]="'data:image/jpg;base64,' + driver.carPhoto" alt="Driver's car photo">
+        <mat-card-content>
+                  <p>
+                    Age: {{driver.age}} <br>
+                    Phone Number: {{driver.phoneNumber}}<br>
+                    Experience: {{driver.experience}}<br>
+                    Email: {{driver.email}}<br>
+                    Car Model: {{driver.carModel}}<br>
+                    Car Make: {{driver.carMake}}<br>
+                    Car Tag: {{driver.carTag}}<br>
+                  </p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button color="primary" mat-button>Assign passenger</button>
+          <button color="warn" mat-button (click)=deleteOnClick(driver.id!)>Delete</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<!--<mat-grid-list cols="2" rowHeight="1:1">-->
+<!--  <mat-grid-tile *ngFor="let driver of drivers">-->
+<!--    <mat-card class="card-container">-->
+<!--      <img mat-card-xl-image class="card-image" [src]="'data:image/jpg;base64,' +driver.carPhoto"-->
+<!--           alt="Image of the driver">-->
+<!--      <mat-card-title>-->
+<!--        <h3>Name: {{driver.name}}</h3>-->
+<!--      </mat-card-title>-->
+<!--      <mat-card-content>-->
+<!--        <mat-divider></mat-divider>-->
+<!--      </mat-card-content>-->
+<!--      <mat-card-actions align="end">-->
+<!--        <button color="primary" mat-button="">Assign to a passenger</button>-->
+<!--        <button color="primary" mat-button="">Remove</button>-->
+<!--      </mat-card-actions>-->
+<!--      <mat-divider></mat-divider>-->
+<!--    </mat-card>-->
+<!--  </mat-grid-tile>-->
+<!--</mat-grid-list>-->

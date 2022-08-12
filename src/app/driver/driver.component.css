@@ -1,0 +1,21 @@
+mat-toolbar {
+  justify-content: space-between;
+}
+.content {
+  padding: 16px;
+}
+.content > mat-card {
+  margin-bottom: 16px;
+}
+.column-label {
+  margin-right: 8px;
+  font-size: 1rem;
+}
+.title_center {
+  display: flex;
+  justify-content: center; /* align horizontal */
+  align-items: center; /* align vertical */
+}
+mat-card.img{
+  object-fit: cover; /*this makes the image in src fit to the size specified below*/
+}

@@ -16,6 +16,7 @@ export class MapsComponent implements OnInit {
   longitude: number = 0;
   zoom: number = 0;
   address: string | undefined = "";
+  comingDates: Date[] = []
   prev: any;
   employeeInfo: EmployeeInfo = new EmployeeInfo();
   private geoCoder: google.maps.Geocoder | undefined;
@@ -26,19 +27,45 @@ export class MapsComponent implements OnInit {
   public resetModel = new Date(0);
   public model = [];
 
+  markers = [
+    {
+      lat: 34.052235,
+      lng: -118.243683,
+      label: 'Los Angeles'
+    },
+    {
+      lat: 34.024212,
+      lng: -118.496475,
+      label: 'Santa Monica'
+    },
+    {
+      lat: 33.849182,
+      lng: -118.388405,
+      label: 'Redondo Beach'
+    }
+  ];
+
+  // locations = [
+  //   ['Los Angeles', 34.052235, -118.243683],
+  //   ['Santa Monica', 34.024212, -118.496475],
+  //   ['Redondo Beach', 33.849182, -118.388405],
+  //   ['Newport Beach', 33.628342, -117.927933],
+  //   ['Long Beach', 33.770050, -118.193739]
+  // ];
+
   // @ts-ignore
   myForm: FormGroup;
 
   @ViewChild('search')
   public searchElementRef: ElementRef = new ElementRef("");
   // @ts-ignore
-  @ViewChild('picker', { static: true }) _picker: MatDatepicker<Date>;
+  @ViewChild('picker', {static: true}) _picker: MatDatepicker<Date>;
 
   public dateClass = (date: Date) => {
     if (this._findDate(date) !== -1) {
-      return [ 'selected' ];
+      return ['selected'];
     }
-    return [ ];
+    return [];
   }
 
   public dateChanged(event: MatDatepickerInputEvent<Date>): void {
@@ -48,13 +75,16 @@ export class MapsComponent implements OnInit {
       if (index === -1) {
         // @ts-ignore
         this.model.push(date);
+        this.comingDates.push(date)
+        console.log(date);
       } else {
         this.model.splice(index, 1)
       }
       this.resetModel = new Date(0);
       if (!this.CLOSE_ON_SELECTED) {
         const closeFn = this._picker.close;
-        this._picker.close = () => { };
+        this._picker.close = () => {
+        };
         this._picker['_componentRef'].instance._calendar.monthView._createWeekCells();
         setTimeout(() => {
           this._picker.close = closeFn;
@@ -77,7 +107,8 @@ export class MapsComponent implements OnInit {
     private ngZone: NgZone,
     private addressService: UserInfoService,
     private fb: FormBuilder,
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     //load Places Autocomplete
@@ -137,6 +168,7 @@ export class MapsComponent implements OnInit {
     // this.pickUpAddress.fullAddress = this.address;
     // this.pickUpAddress.latitude = this.latitude;
     // this.pickUpAddress.longitude = this.longitude;
+    this.employeeInfo.comingDates = this.comingDates;
     this.employeeInfo.fullAddress = this.address;
     this.employeeInfo.latitude = this.latitude;
     this.employeeInfo.longitude = this.longitude;
@@ -154,7 +186,12 @@ export class MapsComponent implements OnInit {
 
   private getAddress(latitude: number, longitude: number) {
     // @ts-ignore
-    this.geoCoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results: { formatted_address: string; }[], status: string) => {
+    this.geoCoder.geocode({
+      'location': {
+        lat: latitude,
+        lng: longitude
+      }
+    }, (results: { formatted_address: string; }[], status: string) => {
       if (status === 'OK') {
         if (results[0]) {
           this.zoom = 12;
@@ -196,6 +233,7 @@ export class MapsComponent implements OnInit {
   get fullName() {
     return this.myForm.get('fullName');
   }
+
   get phoneNumber() {
     return this.myForm.get('phoneNumber');
   }

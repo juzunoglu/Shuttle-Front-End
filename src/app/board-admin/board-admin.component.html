@@ -1,5 +1,91 @@
-<div class="container">
-  <header class="jumbotron">
-    <p>{{ content }}</p>
-  </header>
-</div>
+<mat-card class="custom">
+  <mat-card-title>Please Fill out the Driver Information</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="adminForm">
+      <mat-form-field>
+        <input matInput placeholder="Driver's full name: " formControlName="driverFullName">
+        <mat-error *ngIf="driverFullName?.invalid">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+      <pre></pre>
+      <mat-form-field>
+        <input type="text" matInput placeholder="Driver's age: " formControlName="driverAge">
+      </mat-form-field>
+      <pre></pre>
+      <mat-form-field>
+        <input type="text" matInput placeholder="Driver's phone number: " formControlName="driverPhoneNumber">
+      </mat-form-field>
+      <pre></pre>
+      <mat-form-field>
+        <input type="text" matInput placeholder="Driver's years of experience: " formControlName="driverExperience">
+      </mat-form-field>
+      <pre></pre>
+      <mat-form-field>
+        <input type="text" matInput placeholder="Driver's email: " formControlName="driverEmail">
+      </mat-form-field>
+      <mat-divider></mat-divider>
+      <pre></pre>
+      <div formGroupName="driverCarInfo">
+        <pre></pre>
+        <mat-card-title>Please Fill out the Driver's Car Information</mat-card-title>
+        <pre></pre>
+        <mat-form-field>
+          <input type="text" matInput placeholder="Driver's car make: " formControlName="make">
+        </mat-form-field>
+        <pre></pre>
+        <mat-form-field>
+          <input type="text" matInput placeholder="Driver's car model: " formControlName="model">
+        </mat-form-field>
+        <pre></pre>
+        <mat-form-field>
+          <input type="text" matInput placeholder="Driver's car tag: " formControlName="tag">
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-card-content>
+  <mat-divider></mat-divider>
+  <mat-card-actions align="end">
+    <button mat-stroked-button color="primary" type="submit" (click)="onSave()">
+      Save
+    </button>
+  </mat-card-actions>
+</mat-card>
+
+<mat-card *ngIf="isAdminFormSubmitted">
+  <mat-card-title>Upload the driver photo</mat-card-title>
+  <mat-card-content>
+    <mat-card-actions align="end">
+      <input type="file" multiple value="select" #selectedFile (change)="selectFile($event)"/>
+      <button mat-stroked-button color="primary" [disabled]="!selectedFiles" (click)="uploadPhoto()">
+        Upload Driver Photo
+      </button>
+    </mat-card-actions>
+<!--    <div class="mt-5">-->
+<!--      <div class="row">-->
+<!--        <mat-grid-list cols="2" rowHeight="1:1">-->
+<!--          <mat-grid-tile *ngFor="let file of #selectedFile">-->
+<!--            <div style="position: relative;">-->
+<!--              <img [src]="file.url" width="100px" height="100px">-->
+<!--            </div>-->
+<!--          </mat-grid-tile>-->
+<!--        </mat-grid-list>-->
+<!--      </div>-->
+<!--    </div>-->
+  </mat-card-content>
+</mat-card>
+<mat-card *ngIf="isAdminFormSubmitted && isFileUploaded">
+  <mat-card-content>
+    <mat-card-subtitle>List of Photos uploaded</mat-card-subtitle>
+    <div *ngIf="message" class="alert alert-secondary" role="alert">{{ message }}</div>
+    <ul
+      class="list-group list-group-flush"
+      *ngFor="let file of fileInfos | async"
+    >
+      <li class="list-group-item">
+        <a href="{{ file.url }}">{{ file.name }}</a>
+      </li>
+    </ul>
+  </mat-card-content>
+</mat-card>
+
