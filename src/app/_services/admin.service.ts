@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpEvent, HttpHeaders, HttpRequest} from "@angular/common/http";
 import {catchError, from, Observable, throwError} from "rxjs";
 import {Driver} from "../model/driver.model";
-import {THREE} from "@angular/cdk/keycodes";
 
 const ADMIN_API = 'http://localhost:8080/api/v1/driver';
 
@@ -43,6 +42,7 @@ export class AdminService {
         catchError(this.handleError)
       );
   }
+
   deleteDriver(id: string): Observable<boolean> {
     return this.http.delete<boolean>(`${ADMIN_API}/delete/${id}`)
       .pipe(
@@ -57,10 +57,6 @@ export class AdminService {
       );
   }
 
-  // todo delete driver by ID
-  //todo getAllDrivers
-  // todo getDriverByID
-  //todo patch Driver data???
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.

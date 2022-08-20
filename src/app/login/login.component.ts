@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AuthService} from '../_services/auth.service';
 import {TokenStorageService} from '../_services/token-storage.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
@@ -16,8 +16,11 @@ export class LoginComponent implements OnInit {
   };
   isLoggedIn = false;
   isLoginFailed = false;
-  errorMessage = '';
+  errorMessage: string | undefined;
   roles: string[] = [];
+
+  public showPassword: boolean = false;
+
 
   // @ts-ignore
   loginForm: FormGroup;
@@ -39,8 +42,12 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  public togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+
   navigateWhenLoggedIn() {
-    this.router.navigate(['/user'])
+    this.router.navigate(['/home'])
   }
 
   private initializeLoginForm(): void {

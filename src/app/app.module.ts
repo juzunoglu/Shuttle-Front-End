@@ -21,7 +21,6 @@ import {RegisterComponent} from './register/register.component';
 import {HomeComponent} from './home/home.component';
 import {ProfileComponent} from './profile/profile.component';
 import {BoardAdminComponent} from './board-admin/board-admin.component';
-import {BoardModeratorComponent} from './board-moderator/board-moderator.component';
 import {BoardUserComponent} from './board-user/board-user.component';
 import {authInterceptorProviders} from './_helpers/auth.interceptor';
 import {MatCardModule} from "@angular/material/card";
@@ -43,6 +42,12 @@ import {DriverComponent} from './driver/driver.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatSliderModule} from "@angular/material/slider";
+import {MatRadioModule} from "@angular/material/radio";
+import { PassengerComponent } from './passenger/passenger.component';
+import { PassengerInfoComponent } from './passenger-info/passenger-info.component';
+import {MatTableModule} from "@angular/material/table";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 
 @NgModule({
@@ -55,16 +60,17 @@ import {MatSliderModule} from "@angular/material/slider";
     HomeComponent,
     ProfileComponent,
     BoardAdminComponent,
-    BoardModeratorComponent,
     BoardUserComponent,
     DriverComponent,
+    PassengerComponent,
+    PassengerInfoComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AgmCoreModule.forRoot({
       apiKey: '', //todo delete before push
-      libraries: ['places']
+      libraries: ['places', 'drawing', 'geometry']
     }),
     BrowserAnimationsModule,
     MatButtonModule,
@@ -101,6 +107,10 @@ import {MatSliderModule} from "@angular/material/slider";
     MatToolbarModule,
     FlexLayoutModule,
     MatSliderModule,
+    MatRadioModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatTooltipModule,
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent],

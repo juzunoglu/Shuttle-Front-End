@@ -4,18 +4,18 @@ import {RegisterComponent} from './register/register.component';
 import {LoginComponent} from './login/login.component';
 import {HomeComponent} from './home/home.component';
 import {ProfileComponent} from './profile/profile.component';
-import {BoardModeratorComponent} from './board-moderator/board-moderator.component';
 import {BoardAdminComponent} from './board-admin/board-admin.component';
-import {BoardUserComponent} from "./board-user/board-user.component";
 import {DriverComponent} from "./driver/driver.component";
+import {PassengerComponent} from "./passenger/passenger.component";
+import {PassengerInfoComponent} from "./passenger-info/passenger-info.component";
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'profile', component: ProfileComponent},
-  {path: 'user', component: BoardUserComponent},
-  {path: 'mod', component: BoardModeratorComponent},
+  {path: 'create-passenger', component: PassengerComponent},
+  {path: 'info-passenger', component: PassengerInfoComponent},
   {path: 'admin', component: BoardAdminComponent},
   {path: 'driver', component: DriverComponent},
   {path: '', redirectTo: 'login', pathMatch: 'full'}

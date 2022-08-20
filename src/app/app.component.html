@@ -3,19 +3,19 @@
     <a href="#" class="navbar-brand">ShuttleInfo</a>
     <ul class="navbar-nav mr-auto" routerLinkActive="active">
       <li class="nav-item">
-        <a href="/home" class="nav-link" routerLink="home">Home</a>
+        <a href="/home" class="nav-link" *ngIf="isLoggedIn" routerLink="home">Home</a>
       </li>
       <li class="nav-item" *ngIf="showAdminBoard">
-        <a href="/admin" class="nav-link" routerLink="admin">Admin Board</a>
+        <a href="/admin" class="nav-link" routerLink="admin">Create Driver</a>
       </li>
       <li class="nav-item">
-        <a href="/driver" class="nav-link" routerLink="driver">Drivers</a>
-      </li>
-      <li class="nav-item" *ngIf="showModeratorBoard">
-        <a href="/mod" class="nav-link" routerLink="mod">Moderator Board</a>
+        <a href="/driver" class="nav-link" *ngIf="isLoggedIn" routerLink="driver">Driver-Information</a>
       </li>
       <li class="nav-item">
-        <a href="/user" class="nav-link" *ngIf="isLoggedIn" routerLink="user">User</a>
+        <a href="/create-passenger" class="nav-link" *ngIf="isLoggedIn"  routerLink="create-passenger">Create Passenger</a>
+      </li>
+      <li class="nav-item">
+        <a href="/info-passenger" class="nav-link" *ngIf="isLoggedIn"  routerLink="info-passenger">Passenger Information</a>
       </li>
     </ul>
     <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">

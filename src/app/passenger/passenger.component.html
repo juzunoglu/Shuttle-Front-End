@@ -1,0 +1,53 @@
+<mat-card class="container-fluid">
+  <mat-card-title align="center">Please Fill out the Passenger Information</mat-card-title>
+  <app-maps
+    [title]="title"
+    (locationEvent)="getLatLng($event)"
+  >
+  </app-maps>
+  <br>
+  <mat-card-content>
+    <form [formGroup]="passengerForm">
+      <mat-form-field>
+        <input type="text" matInput placeholder="Passenger's latitude: " formControlName="passengerLatitude">
+        <mat-error *ngIf="passengerLatitude?.invalid">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input type="text" matInput placeholder="Passenger's longitude: " formControlName="passengerLongitude">
+        <mat-error *ngIf="passengerLongitude?.invalid">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Passenger's full name: " formControlName="passengerFullName">
+        <mat-error *ngIf="passengerFullName?.invalid">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input type="text" matInput placeholder="Passenger's age: " formControlName="passengerAge">
+      </mat-form-field>
+      <mat-form-field>
+        <input type="text" matInput placeholder="Passenger's phone number: " formControlName="passengerPhoneNumber">
+        <mat-error *ngIf="passengerPhoneNumber?.invalid">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input type="text" matInput placeholder="Passenger's email: " formControlName="passengerEmail">
+        <mat-error *ngIf="passengerEmail?.invalid">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-flat-button color="primary" [disabled]="passengerForm.invalid" type="submit" (click)="onSave()">
+      Save Passenger
+    </button>
+  </mat-card-actions>
+</mat-card>
+
+

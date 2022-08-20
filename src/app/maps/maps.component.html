@@ -1,88 +1,68 @@
- <mat-card class="custom">
-   <mat-card-title>Please choose the dates you want to come</mat-card-title>
-   <mat-card-content>
-     <mat-form-field>
-       <mat-chip-list #chipList aria-label="Choose a date" (click)="picker.open()">
-         <mat-chip
-           *ngFor="let value of model"
-           [selectable]="false"
-           [removable]="true"
-           (removed)="remove(value)"
-         >
-           {{ value | date }}
-           <mat-icon matChipRemove *ngIf="true">cancel</mat-icon>
-         </mat-chip>
-         <input
-           [value]="resetModel"
-           matInput
-           [matDatepicker]="picker"
-           placeholder="Choose a date"
-           (dateChange)="dateChanged($event)"
-           [matChipInputFor]="chipList"
-           hidden
-         />
-       </mat-chip-list>
-       <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
-       <mat-datepicker
-         #picker
-         [startAt]="init"
-         [dateClass]="dateClass"
-       ></mat-datepicker>
-     </mat-form-field>
-   </mat-card-content>
-   <mat-card-title>Please choose your location to be picked up</mat-card-title>
-   <mat-card-content>
-     <div class="form-group">
-       <form class="example-search-form">
-         <mat-form-field class="example-full-width" appearance="legacy">
-           <input matInput placeholder="Search Nearest Location" autocorrect="on" autocapitalize="off" spellcheck="off"
-                  #search>
-         </mat-form-field>
-       </form>
-     </div>
+<div class="custom-datepicker" *ngIf="isDatesPickingAllowed">
+  <mat-form-field>
+    <mat-chip-list #chipList aria-label="Choose a date" (click)="picker.open()">
+      <mat-chip
+        *ngFor="let value of model"
+        [selectable]="false"
+        [removable]="true"
+        (removed)="remove(value)"
+      >
+        {{ value | date }}
+        <mat-icon matChipRemove *ngIf="true">cancel</mat-icon>
+      </mat-chip>
+      <input
+        [value]="resetModel"
+        matInput
+        [matDatepicker]="picker"
+        placeholder="Choose a date"
+        (dateChange)="dateChanged($event)"
+        [matChipInputFor]="chipList"
+        hidden
+      />
+    </mat-chip-list>
+    <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker
+      #picker
+      [startAt]="init"
+      [dateClass]="dateClass"
+    ></mat-datepicker>
+  </mat-form-field>
+</div>
+<div class="form-group">
+  <form class="example-search-form">
+    <mat-form-field class="example-full-width" appearance="legacy">
+      <input matInput placeholder="{{title}}" autocorrect="on" autocapitalize="off" spellcheck="off"
+             #search>
+    </mat-form-field>
+  </form>
+</div>
 
-     <div class="container">
-       <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
-         <agm-marker *ngFor="let marker of markers" [latitude]="marker.lat" [longitude]="marker.lng" [markerDraggable]="true" [markerClickable]="true"
-                     (dragEnd)="markerDragEnd($event)" (markerClick)="clickedMarker(infoWindow)">
-           <agm-info-window #infoWindow>
-             <strong> {{marker.label}}</strong>
-           </agm-info-window>
-         </agm-marker>
-       </agm-map>
-     </div>
+<div class="container">
+  <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+    <agm-marker *ngFor="let passenger of passengerCoordinatesArray"
+      [latitude]="passenger.latitude"
+      [longitude]="passenger.longitude"
+      [markerDraggable]="true"
+      [markerClickable]="true"
+      (dragEnd)="markerDragEnd($event)"
+      (markerClick)="clickedMarker(infoWindow)"
+    >
+      <agm-info-window #infoWindow>
+        <strong>passengerName: {{passenger.name}}</strong>
+      </agm-info-window>
+    </agm-marker>
+    <agm-polyline (lineClick)="lineClick($event)" [editable]="true" [clickable]="true" [visible]="true" [strokeWeight]="7" [strokeColor]="'#07b57a'">
 
-     <pre></pre>
-     <form [formGroup]="myForm">
-
-       <mat-form-field>
-         <input matInput placeholder="FullName:" formControlName="fullName">
-         <mat-error>Please provide your name</mat-error>
-       </mat-form-field>
-       <pre></pre>
-       <mat-form-field>
-         <input matInput placeholder="Phone Number:" formControlName="phoneNumber">
-         <mat-error> Your phone is incorrect</mat-error>
-       </mat-form-field>
-       <pre></pre>
-       <mat-form-field>
-         <input matInput placeholder="Email:" formControlName="email" autocomplete="on">
-         <mat-error *ngIf="email?.invalid">
-           Your email does not look right
-         </mat-error>
-       </mat-form-field>
-       <pre></pre>
-<!--       <div>Pick Up Address: {{address}}</div>-->
-<!--       <div>Latitude: {{latitude}}</div>-->
-<!--       <div>Longitude: {{longitude}}</div>-->
-<!--       <div>FullName: {{fullName?.value}}</div>-->
-<!--       <div>Phone Number: {{phoneNumber?.value}}</div>-->
-<!--       <div>Email: {{email?.value}}</div>-->
-       <pre></pre>
-       <button mat-flat-button color="primary" type="submit" [disabled]="myForm.invalid" (click)="onSend() ">
-         Send Location
-       </button>
-     </form>
-   </mat-card-content>
- </mat-card>
+      <agm-polyline-point *ngFor="let coordinate of passengerCoordinatesArray"
+                          [latitude]="coordinate.latitude" [longitude]="coordinate.longitude"></agm-polyline-point>
+    </agm-polyline>
+  </agm-map>
+  <pre></pre>
+  <button *ngIf="canSendLatLong" mat-flat-button
+          color="primary"
+          (click)="sendLngLat()"
+  >
+    Find latitude and longitude
+  </button>
+</div>
 

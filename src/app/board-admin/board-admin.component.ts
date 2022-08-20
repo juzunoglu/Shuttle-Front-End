@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AdminService} from "../_services/admin.service";
-import {Observable} from "rxjs";
 import {HttpEventType, HttpResponse} from "@angular/common/http";
 import {Driver} from "../model/driver.model";
 import {ConfirmationDialogService} from "../service/confirmation-dialog.service";
+import {AgmMarker} from "@agm/core";
 
 @Component({
   selector: 'app-board-admin',
@@ -12,7 +12,7 @@ import {ConfirmationDialogService} from "../service/confirmation-dialog.service"
   styleUrls: ['./board-admin.component.css']
 })
 export class BoardAdminComponent implements OnInit {
-  content?: string;
+  title: string = "Driver's address"
 
   // @ts-ignore
   adminForm: FormGroup;
@@ -21,7 +21,6 @@ export class BoardAdminComponent implements OnInit {
   currentFile?: File;
   progress = 0;
   message = '';
-  fileInfos?: Observable<any>;
   isAdminFormSubmitted: boolean = false;
   isFileUploaded: boolean = false;
   driver: Driver = new Driver();
@@ -35,11 +34,16 @@ export class BoardAdminComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initiliazeAdminPanel();
+    this.initializeAdminPanel();
   }
 
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
+  }
+
+  getLatLng(location: any) {
+    this.adminForm.controls['driverLatitude'].setValue(location.lat)
+    this.adminForm.controls['driverLongitude'].setValue(location.lng)
   }
 
   onSave(): void {
@@ -54,6 +58,8 @@ export class BoardAdminComponent implements OnInit {
           this.driver.carMake = this.driverCarMake?.value;
           this.driver.carModel = this.driverCarModel?.value;
           this.driver.carTag = this.driverCarTag?.value;
+          this.driver.latitude = this.driverLatitude?.value;
+          this.driver.longitude = this.driverLongitude?.value;
           this.adminService.createDriver(this.driver).subscribe(
             (res) => {
               this.driverId = res.id;
@@ -81,7 +87,6 @@ export class BoardAdminComponent implements OnInit {
               this.progress = Math.round(100 * event.loaded / event.total);
             } else if (event instanceof HttpResponse) {
               this.message = event.body.message;
-              // this.fileInfos = this.adminService.getDriverPhoto(this.driverId!);
             }
             this.isFileUploaded = true;
           },
@@ -101,8 +106,14 @@ export class BoardAdminComponent implements OnInit {
     }
   }
 
-  private initiliazeAdminPanel(): void {
+  private initializeAdminPanel(): void {
     this.adminForm = this.fb.group({
+      driverLatitude: new FormControl('', [
+        Validators.required
+      ]),
+      driverLongitude: new FormControl('', [
+        Validators.required
+      ]),
       driverFullName: new FormControl('', [
         Validators.required
       ]),
@@ -113,7 +124,9 @@ export class BoardAdminComponent implements OnInit {
         Validators.required
       ]),
       driverExperience: new FormControl('', []),
-      driverEmail: new FormControl('', []),
+      driverEmail: new FormControl('', [
+        Validators.required,
+      ]),
       driverCarInfo: this.fb.group({
         make: [''],
         model: [''],
@@ -121,6 +134,14 @@ export class BoardAdminComponent implements OnInit {
         tag: ['', Validators.required]
       })
     });
+  }
+
+  get driverLatitude() {
+    return this.adminForm.get('driverLatitude');
+  }
+
+  get driverLongitude() {
+    return this.adminForm.get('driverLongitude');
   }
 
   get driverFullName() {
@@ -138,6 +159,7 @@ export class BoardAdminComponent implements OnInit {
   get driverExperience() {
     return this.adminForm.get('driverExperience');
   }
+
   get driverEmail() {
     return this.adminForm.get('driverEmail');
   }
@@ -145,11 +167,9 @@ export class BoardAdminComponent implements OnInit {
   get driverCarMake() {
     return this.adminForm.get('driverCarInfo.make');
   }
+
   get driverCarModel() {
     return this.adminForm.get('driverCarInfo.model');
-  }
-  get driverCarPhoto() {
-    return this.adminForm.get('driverCarInfo.file');
   }
 
   get driverCarTag() {

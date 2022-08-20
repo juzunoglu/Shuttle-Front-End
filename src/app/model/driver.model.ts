@@ -6,7 +6,8 @@ export class Driver {
   phoneNumber: number | undefined;
   experience: string | undefined;
   email: string | undefined;
-  driverPhoto: any;
+  latitude: number | undefined;
+  longitude: number | undefined;
   carPhoto: any;
   carMake: string | undefined;
   carModel: string | undefined;

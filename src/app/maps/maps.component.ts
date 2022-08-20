@@ -1,9 +1,9 @@
-import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
-import {EmployeeInfo} from "../model/address.model";
-import {MapsAPILoader} from "@agm/core";
-import {UserInfoService} from "../service/user-info.service";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {Component, ElementRef, EventEmitter, Input, NgZone, OnInit, Output, ViewChild} from '@angular/core';
+import {AgmMarker, MapsAPILoader} from "@agm/core";
+import {FormGroup,} from "@angular/forms";
 import {MatDatepicker, MatDatepickerInputEvent} from "@angular/material/datepicker";
+import {PassengerModel} from "../model/passenger.model";
+import PolyMouseEvent = google.maps.PolyMouseEvent;
 
 @Component({
   selector: 'app-maps',
@@ -11,47 +11,27 @@ import {MatDatepicker, MatDatepickerInputEvent} from "@angular/material/datepick
   styleUrls: ['./maps.component.css']
 })
 export class MapsComponent implements OnInit {
-  title: string = 'Pick up location:';
-  latitude: number = 0;
-  longitude: number = 0;
-  zoom: number = 0;
+  @Input() title?: string = 'Pick up location:';
+  // istanbul latitude/longitude
+  @Input() latitude: number = 41.0082;
+  @Input() longitude: number = 28.9784;
+  @Input() zoom: number = 9;
+  @Input() canSendLatLong: boolean = true;
+  @Output() locationEvent = new EventEmitter();
+
+  @Input() passengerCoordinatesArray: PassengerModel[] = [];
+
   address: string | undefined = "";
   comingDates: Date[] = []
   prev: any;
-  employeeInfo: EmployeeInfo = new EmployeeInfo();
   private geoCoder: google.maps.Geocoder | undefined;
 
   // date picker related
   public CLOSE_ON_SELECTED = false;
   public init = new Date();
-  public resetModel = new Date(0);
+  public resetModel: Date = new Date(0);
   public model = [];
-
-  markers = [
-    {
-      lat: 34.052235,
-      lng: -118.243683,
-      label: 'Los Angeles'
-    },
-    {
-      lat: 34.024212,
-      lng: -118.496475,
-      label: 'Santa Monica'
-    },
-    {
-      lat: 33.849182,
-      lng: -118.388405,
-      label: 'Redondo Beach'
-    }
-  ];
-
-  // locations = [
-  //   ['Los Angeles', 34.052235, -118.243683],
-  //   ['Santa Monica', 34.024212, -118.496475],
-  //   ['Redondo Beach', 33.849182, -118.388405],
-  //   ['Newport Beach', 33.628342, -117.927933],
-  //   ['Long Beach', 33.770050, -118.193739]
-  // ];
+  public isDatesPickingAllowed = false;
 
   // @ts-ignore
   myForm: FormGroup;
@@ -104,28 +84,21 @@ export class MapsComponent implements OnInit {
 
   constructor(
     private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone,
-    private addressService: UserInfoService,
-    private fb: FormBuilder,
+    private ngZone: NgZone
   ) {
   }
 
   ngOnInit() {
-    //load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
-      this.setCurrentLocation();
+      // this.setCurrentLocation();
       this.geoCoder = new google.maps.Geocoder;
       let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement);
       autocomplete.addListener("place_changed", () => {
         this.ngZone.run(() => {
-          //get the place result
           let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-
-          //verify result
           if (place.geometry === undefined || place.geometry === null) {
             return;
           }
-          //set latitude, longitude and zoom
           this.latitude = place.geometry.location.lat();
           this.longitude = place.geometry.location.lng();
           this.address = place.formatted_address;
@@ -133,28 +106,30 @@ export class MapsComponent implements OnInit {
         });
       });
     });
-    this.initializeForm();
-    this.myForm.valueChanges.subscribe(console.log)
   }
 
   // Get Current Location Coordinates
-  private setCurrentLocation() {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.latitude = position.coords.latitude;
-        this.longitude = position.coords.longitude;
-        this.zoom = 8;
-        this.getAddress(this.latitude, this.longitude);
-      });
-    }
-  }
+  // private setCurrentLocation() {
+  //   if ('geolocation' in navigator) {
+  //     navigator.geolocation.getCurrentPosition((position) => {
+  //       this.latitude = position.coords.latitude;
+  //       this.longitude = position.coords.longitude;
+  //       this.zoom = 8;
+  //       this.getAddress(this.latitude, this.longitude);
+  //     });
+  //   }
+  // }
 
   public markerDragEnd($event: google.maps.MouseEvent) {
     console.log($event);
     this.latitude = $event.latLng.lat()
     this.longitude = $event.latLng.lng();
     this.getAddress(this.latitude, this.longitude);
-    console.log('dragEventFinished')
+  }
+
+  sendLngLat() {
+    this.locationEvent.emit({lat: this.latitude, lng: this.longitude});
+    this.zoom = 14;
   }
 
   public clickedMarker(window: any) {
@@ -164,24 +139,8 @@ export class MapsComponent implements OnInit {
     this.prev = window;
   }
 
-  public onSend() {
-    // this.pickUpAddress.fullAddress = this.address;
-    // this.pickUpAddress.latitude = this.latitude;
-    // this.pickUpAddress.longitude = this.longitude;
-    this.employeeInfo.comingDates = this.comingDates;
-    this.employeeInfo.fullAddress = this.address;
-    this.employeeInfo.latitude = this.latitude;
-    this.employeeInfo.longitude = this.longitude;
-    this.employeeInfo.fullName = this.fullName?.value;
-    this.employeeInfo.phoneNumber = this.phoneNumber?.value;
-    this.employeeInfo.email = this.email?.value;
-
-    this.addressService.sendUserInfo(this.employeeInfo).subscribe(
-      (response) => {
-        console.log("Response!: ", response)
-      }
-    )
-    window.alert('Your information has been taken! Thank you...')
+  public lineClick(event: PolyMouseEvent) {
+    console.log(event);
   }
 
   private getAddress(latitude: number, longitude: number) {
@@ -194,7 +153,7 @@ export class MapsComponent implements OnInit {
     }, (results: { formatted_address: string; }[], status: string) => {
       if (status === 'OK') {
         if (results[0]) {
-          this.zoom = 12;
+          this.zoom = 8;
           this.address = results[0].formatted_address;
         } else {
           window.alert('No results found');
@@ -204,38 +163,4 @@ export class MapsComponent implements OnInit {
       }
     });
   }
-
-  private initializeForm(): void {
-    this.myForm = this.fb.group({
-      fullName: new FormControl(this.employeeInfo.fullName, [
-        Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(25)
-      ]),
-      email: new FormControl(this.employeeInfo.email, [
-        Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(25),
-        Validators.email
-      ]),
-      phoneNumber: new FormControl(this.employeeInfo.phoneNumber, [
-        Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(25),
-      ])
-    });
-  }
-
-  get email() {
-    return this.myForm.get('email');
-  }
-
-  get fullName() {
-    return this.myForm.get('fullName');
-  }
-
-  get phoneNumber() {
-    return this.myForm.get('phoneNumber');
-  }
-
 }
