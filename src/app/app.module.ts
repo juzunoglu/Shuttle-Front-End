@@ -48,6 +48,8 @@ import { PassengerInfoComponent } from './passenger-info/passenger-info.componen
 import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatSortModule} from "@angular/material/sort";
+import { DriverDialogComponent } from './driver-dialog/driver-dialog.component';
 
 
 @NgModule({
@@ -64,6 +66,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     DriverComponent,
     PassengerComponent,
     PassengerInfoComponent,
+    DriverDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -111,6 +114,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     MatTableModule,
     MatPaginatorModule,
     MatTooltipModule,
+    MatSortModule,
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent],

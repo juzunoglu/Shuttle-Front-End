@@ -34,6 +34,13 @@ export class PassengerService {
       );
   }
 
+  assignPassengerToDriver(passenger: PassengerModel, id: string): Observable<boolean> {
+    return this.http.post<boolean>(`${PASSENGER_API}/assignToDriver/${id}`, passenger)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.

@@ -12,4 +12,5 @@ export class Driver {
   carMake: string | undefined;
   carModel: string | undefined;
   carTag: string | undefined;
+  isSelected?: boolean;
 }
