@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {PassengerModel} from "../model/passenger.model";
 import {catchError, Observable, throwError} from "rxjs";
+import {Driver} from "../model/driver.model";
 
 const PASSENGER_API = 'http://localhost:8080/api/v1/passenger';
 
@@ -17,7 +18,7 @@ export class PassengerService {
     return this.http.post<PassengerModel>(PASSENGER_API + '/create', passenger)
       .pipe(
         catchError(this.handleError)
-      )
+      );
   }
 
   deletePassenger(id: string): Observable<boolean> {

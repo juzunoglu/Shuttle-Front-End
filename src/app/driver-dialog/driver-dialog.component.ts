@@ -1,10 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {AdminService} from "../_services/admin.service";
-import {Observable} from "rxjs";
 import {Driver} from "../model/driver.model";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {PassengerModel} from "../model/passenger.model";
-import {MatListOption} from "@angular/material/list";
 
 @Component({
   selector: 'app-driver-dialog',

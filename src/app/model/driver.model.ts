@@ -1,3 +1,5 @@
+import {PassengerModel} from "./passenger.model";
+
 export class Driver {
 
   id?: string
@@ -13,4 +15,5 @@ export class Driver {
   carModel: string | undefined;
   carTag: string | undefined;
   isSelected?: boolean;
+  passengers?: PassengerModel[];
 }

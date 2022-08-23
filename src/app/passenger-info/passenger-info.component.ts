@@ -5,11 +5,11 @@ import {PassengerModel} from "../model/passenger.model";
 import {PassengerService} from "../_services/passenger.service";
 import {ConfirmationDialogService} from "../service/confirmation-dialog.service";
 import {MatSort} from "@angular/material/sort";
-import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {DriverComponent} from "../driver/driver.component";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {DriverDialogComponent} from "../driver-dialog/driver-dialog.component";
-import {MatListOption} from "@angular/material/list";
 import {Driver} from "../model/driver.model";
+import {AdminService} from "../_services/admin.service";
+import {PassengerDialogComponent} from "../passenger-dialog/passenger-dialog.component";
 
 @Component({
   selector: 'app-passenger-info',
@@ -23,27 +23,10 @@ export class PassengerInfoComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<PassengerModel>();
 
   constructor(private readonly passengerService: PassengerService,
+              private readonly driverService: AdminService,
               private readonly confirmationDialogService: ConfirmationDialogService,
               private readonly dialog: MatDialog) {
 
-  }
-
-  removeSelectedRows() {
-    const selectedPassengers = this.dataSource.data.filter((p: PassengerModel) => p.isSelected);
-    console.log(selectedPassengers);
-    this.confirmationDialogService
-      .confirm("Are you sure you want to delete the selected passengers", selectedPassengers.map(it => it.name).toString())
-      .then((res) => {
-        if (res) {
-          const ids = selectedPassengers.map((it) => it.id!)
-          ids.forEach((id) => {
-            this.passengerService.deletePassenger(id)
-              .subscribe(() => {
-                this.dataSource.data = this.dataSource.data.filter((u: PassengerModel) => u.id !== id)
-              })
-          })
-        }
-      })
   }
 
   // @ts-ignore
@@ -60,7 +43,7 @@ export class PassengerInfoComponent implements OnInit, AfterViewInit {
     this.passengerService.getAllPassengers()
       .subscribe((res) => {
         this.dataSource.data = res;
-      })
+      });
   }
 
   doFilter = (event: Event) => {
@@ -82,12 +65,28 @@ export class PassengerInfoComponent implements OnInit, AfterViewInit {
       });
   }
 
+  removeSelectedRows() {
+    const selectedPassengers = this.dataSource.data.filter((p: PassengerModel) => p.isSelected);
+    this.confirmationDialogService
+      .confirm("Are you sure you want to delete the selected passengers", selectedPassengers.map(it => it.name).toString())
+      .then((res) => {
+        if (res) {
+          const ids = selectedPassengers.map((it) => it.id!)
+          ids.forEach((id) => {
+            this.passengerService.deletePassenger(id)
+              .subscribe(() => {
+                this.dataSource.data = this.dataSource.data.filter((u: PassengerModel) => u.id !== id)
+              })
+          })
+        }
+      });
+  }
+
   // Todo
   onEdit(passenger: PassengerModel) {
     console.log(passenger);
   }
 
-  //todo
   assignToDriver(passenger: PassengerModel) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
@@ -99,5 +98,17 @@ export class PassengerInfoComponent implements OnInit, AfterViewInit {
       this.passengerService.assignPassengerToDriver(passenger, driver.id!)
         .subscribe((res: boolean) => console.log(res))
     });
+  }
+
+  viewAssignedDrivers(id: string) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = id;
+    dialogConfig.height = '30%'
+    const dialogRef = this.dialog.open(PassengerDialogComponent, dialogConfig);
+    // dialogRef.afterOpened().subscribe(() => {
+    //   this.driverService.getDriverByPassengerId(id)
+    //     .subscribe((driver: Driver) => console.log(driver))
+    // })
   }
 }

@@ -8,7 +8,7 @@
 </mat-toolbar>
 
 <div class="content">
-  <div fxlayout="row-wrap" fxLayoutGap="16px grid">
+  <div fxLayout="row-wrap" fxLayoutGap="16px grid">
     <div [fxFlex]="(100/gridColumns) + '%'" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let driver of drivers">
       <mat-card class="mat-elevation-z4" >
         <mat-card-header>
@@ -27,7 +27,7 @@
                   </p>
         </mat-card-content>
         <mat-card-actions align="end">
-          <button color="primary" mat-button>Assign passenger</button>
+          <button color="primary" mat-button (click)="viewPassengers(driver)">View Assigned Passengers</button>
           <button color="warn" mat-button (click)=deleteOnClick(driver.id!)>Delete</button>
         </mat-card-actions>
       </mat-card>

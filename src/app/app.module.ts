@@ -50,6 +50,7 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatSortModule} from "@angular/material/sort";
 import { DriverDialogComponent } from './driver-dialog/driver-dialog.component';
+import { PassengerDialogComponent } from './passenger-dialog/passenger-dialog.component';
 
 
 @NgModule({
@@ -67,6 +68,7 @@ import { DriverDialogComponent } from './driver-dialog/driver-dialog.component';
     PassengerComponent,
     PassengerInfoComponent,
     DriverDialogComponent,
+    PassengerDialogComponent,
   ],
   imports: [
     BrowserModule,

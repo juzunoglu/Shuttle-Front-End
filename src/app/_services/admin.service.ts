@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpEvent, HttpHeaders, HttpRequest} from "@angular/common/http";
-import {catchError, from, Observable, throwError} from "rxjs";
+import {catchError, from, Observable, tap, throwError} from "rxjs";
 import {Driver} from "../model/driver.model";
+import {PassengerModel} from "../model/passenger.model";
 
 const ADMIN_API = 'http://localhost:8080/api/v1/driver';
 
@@ -38,6 +39,13 @@ export class AdminService {
 
   getAllDrivers(): Observable<Driver[]> {
     return this.http.get<Driver[]>(ADMIN_API + '/getAllDrivers')
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getDriverByPassengerId(id: string): Observable<PassengerModel[]> {
+    return this.http.get<PassengerModel[]>(`${ADMIN_API}/getAssociatedPassengers/${id}`)
       .pipe(
         catchError(this.handleError)
       );
