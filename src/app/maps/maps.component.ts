@@ -4,6 +4,7 @@ import {FormGroup,} from "@angular/forms";
 import {MatDatepicker, MatDatepickerInputEvent} from "@angular/material/datepicker";
 import {PassengerModel} from "../model/passenger.model";
 import PolyMouseEvent = google.maps.PolyMouseEvent;
+import {Driver} from "../model/driver.model";
 
 @Component({
   selector: 'app-maps',
@@ -18,8 +19,10 @@ export class MapsComponent implements OnInit {
   @Input() zoom: number = 9;
   @Input() canSendLatLong: boolean = true;
   @Output() locationEvent = new EventEmitter();
+  @Input() canSearch = true;
 
   @Input() passengerCoordinatesArray: PassengerModel[] = [];
+  @Input() driverCoordinatesArray: Driver[] = [];
 
   address: string | undefined = "";
   comingDates: Date[] = []

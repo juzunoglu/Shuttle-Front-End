@@ -1,3 +1,5 @@
+import {Driver} from "./driver.model";
+
 export interface PassengerModel {
   isSelected?: boolean,
   isEdit?: boolean,
@@ -8,4 +10,5 @@ export interface PassengerModel {
   email: string,
   latitude: number,
   longitude: number,
+  driver?: Driver,
 }

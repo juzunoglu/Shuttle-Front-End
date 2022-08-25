@@ -1,14 +1,14 @@
 import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
-import {PassengerModel} from "../model/passenger.model";
-import {PassengerService} from "../_services/passenger.service";
-import {ConfirmationDialogService} from "../service/confirmation-dialog.service";
+import {PassengerModel} from "../../model/passenger.model";
+import {PassengerService} from "../../_services/passenger.service";
+import {ConfirmationDialogService} from "../../service/confirmation-dialog.service";
 import {MatSort} from "@angular/material/sort";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {DriverDialogComponent} from "../driver-dialog/driver-dialog.component";
-import {Driver} from "../model/driver.model";
-import {AdminService} from "../_services/admin.service";
+import {DriverDialogComponent} from "../../driver-dialog/driver-dialog.component";
+import {Driver} from "../../model/driver.model";
+import {AdminService} from "../../_services/admin.service";
 import {PassengerDialogComponent} from "../passenger-dialog/passenger-dialog.component";
 
 @Component({
@@ -93,10 +93,24 @@ export class PassengerInfoComponent implements OnInit, AfterViewInit {
     dialogConfig.data = passenger;
     dialogConfig.height = '30%'
     const dialogRef = this.dialog.open(DriverDialogComponent, dialogConfig);
+
     dialogRef.afterClosed().subscribe((driver: Driver) => {
-      console.log('Data coming from Dialog output:', driver)
-      this.passengerService.assignPassengerToDriver(passenger, driver.id!)
-        .subscribe((res: boolean) => console.log(res))
+      console.table(passenger.driver)
+      if (driver != null) { // user clicked on close if the driver is null
+        if (passenger.driver != null) {
+          this.confirmationDialogService.confirm(`The passenger is already assigned to the driver: ${passenger.driver.name}`, "Do you still want to continue?")
+            .then((confirmed) => {
+              if (confirmed) {
+                this.passengerService.assignPassengerToDriver(passenger, driver.id!)
+                  .subscribe((res: boolean) => console.log(res))
+              }
+            });
+        } else {
+          this.passengerService.assignPassengerToDriver(passenger, driver.id!)
+            .subscribe();
+        }
+
+      }
     });
   }
 

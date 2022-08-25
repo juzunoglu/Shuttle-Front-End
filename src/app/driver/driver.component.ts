@@ -5,7 +5,7 @@ import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {ConfirmationDialogService} from "../service/confirmation-dialog.service";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {DriverDialogComponent} from "../driver-dialog/driver-dialog.component";
-import {PassengerDialogComponent} from "../passenger-dialog/passenger-dialog.component";
+import {PassengerDialogComponent} from "../Passenger-Logic/passenger-dialog/passenger-dialog.component";
 
 @Component({
   selector: 'app-driver',
@@ -16,7 +16,7 @@ export class DriverComponent implements OnInit {
 
 
   public drivers: Driver[] = [];
-  gridColumns = 1;
+  gridColumns = 3;
 
 
   constructor(private readonly adminService: AdminService,
@@ -54,10 +54,10 @@ export class DriverComponent implements OnInit {
   viewPassengers(driver: Driver) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
-    dialogConfig.height = '30%'
+    dialogConfig.height = '40%'
+    dialogConfig.width = '35%'
     dialogConfig.data = driver
     const dialogRef = this.dialog.open(PassengerDialogComponent, dialogConfig);
-    console.log(driver);
   }
 
 }

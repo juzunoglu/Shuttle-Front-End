@@ -43,14 +43,14 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatSliderModule} from "@angular/material/slider";
 import {MatRadioModule} from "@angular/material/radio";
-import { PassengerComponent } from './passenger/passenger.component';
-import { PassengerInfoComponent } from './passenger-info/passenger-info.component';
+import { PassengerComponent } from './Passenger-Logic/passenger/passenger.component';
+import { PassengerInfoComponent } from './Passenger-Logic/passenger-info/passenger-info.component';
 import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatSortModule} from "@angular/material/sort";
 import { DriverDialogComponent } from './driver-dialog/driver-dialog.component';
-import { PassengerDialogComponent } from './passenger-dialog/passenger-dialog.component';
+import { PassengerDialogComponent } from './Passenger-Logic/passenger-dialog/passenger-dialog.component';
 
 
 @NgModule({

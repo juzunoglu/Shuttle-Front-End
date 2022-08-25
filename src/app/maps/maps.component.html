@@ -28,7 +28,7 @@
     ></mat-datepicker>
   </mat-form-field>
 </div>
-<div class="form-group">
+<div class="form-group" *ngIf="canSearch">
   <form class="example-search-form">
     <mat-form-field class="example-full-width" appearance="legacy">
       <input matInput placeholder="{{title}}" autocorrect="on" autocapitalize="off" spellcheck="off"

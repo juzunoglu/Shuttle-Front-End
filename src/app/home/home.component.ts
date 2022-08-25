@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {PassengerService} from "../_services/passenger.service";
 import {PassengerModel} from "../model/passenger.model";
+import {Driver} from "../model/driver.model";
+import {AdminService} from "../_services/admin.service";
 
 @Component({
   selector: 'app-home',
@@ -12,8 +14,10 @@ export class HomeComponent implements OnInit {
   title: string = 'Addresses'
 
   passengers: PassengerModel[] = [];
+  drivers: Driver[] = [];
 
-  constructor(private readonly passengerService: PassengerService) {
+  constructor(private readonly passengerService: PassengerService,
+              private readonly driverService: AdminService) {
   }
 
   ngOnInit(): void {

@@ -44,12 +44,13 @@ export class AdminService {
       );
   }
 
-  getDriverByPassengerId(id: string): Observable<PassengerModel[]> {
+  getPassengersByDriverId(id: string): Observable<PassengerModel[]> {
     return this.http.get<PassengerModel[]>(`${ADMIN_API}/getAssociatedPassengers/${id}`)
       .pipe(
         catchError(this.handleError)
       );
   }
+
 
   deleteDriver(id: string): Observable<boolean> {
     return this.http.delete<boolean>(`${ADMIN_API}/delete/${id}`)

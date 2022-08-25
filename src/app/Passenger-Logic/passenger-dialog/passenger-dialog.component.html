@@ -1,0 +1,18 @@
+<button mat-icon-button class="close-button" style="position: relative" [mat-dialog-close]="true">
+  <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h1 mat-dialog-title style="text-align: center">Assigned Passengers</h1>
+<div mat-dialog-content>
+  <div *ngIf="passengers.length < 1">
+    <p>No passenger is assigned to this Driver</p>
+  </div>
+  <mat-list>
+    <mat-list-item *ngFor="let passenger of passengers">
+      <mat-icon color="primary" mat-list-icon>assignment_ind</mat-icon>
+      <p mat-line>Passenger Name: {{passenger.name}}</p>
+      <p mat-line>Passenger Email: {{passenger.email}}</p>
+      <p mat-line>Passenger Phone#: {{passenger.phoneNumber}}</p>
+      <button mat-flat-button color="warn" (click)="unAssign(passenger)"> Unassign Passenger</button>
+    </mat-list-item>
+  </mat-list>
+</div>
