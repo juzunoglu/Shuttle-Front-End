@@ -1,0 +1,26 @@
+<mat-toolbar color="primary">
+  <div fxHide.gt-xs>
+    <button mat-icon-button (click)="onToggleSideNav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <div>
+    <a routerLink="/home">Home</a>
+  </div>
+  <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
+    <ul fxLayout fxLayoutGap="16px" class="navigation-items">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/create-passenger"> Create Passenger</a>
+      </li>
+      <li>
+        <a routerLink="/info-passenger">Passengers</a>
+      </li>
+      <li>
+        <a routerLink="/admin">Create Driver</a>
+      </li>
+      <li>
+        <a routerLink="/driver">Drivers</a>
+      </li>
+    </ul>
+  </div>
+</mat-toolbar>

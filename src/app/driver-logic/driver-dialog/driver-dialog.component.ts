@@ -1,8 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {AdminService} from "../_services/admin.service";
-import {Driver} from "../model/driver.model";
+import {AdminService} from "../../_services/admin.service";
+import {Driver} from "../../model/driver.model";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {PassengerModel} from "../model/passenger.model";
+import {PassengerModel} from "../../model/passenger.model";
 
 @Component({
   selector: 'app-driver-dialog',
@@ -16,7 +16,9 @@ export class DriverDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<DriverDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: PassengerModel,
-    private readonly driverService: AdminService) {
+    private readonly driverService: AdminService,
+    )
+  {
     this.passenger = data;
   }
 

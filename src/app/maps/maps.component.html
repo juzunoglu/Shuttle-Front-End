@@ -39,22 +39,49 @@
 
 <div class="container">
   <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
-    <agm-marker *ngFor="let passenger of passengerCoordinatesArray"
-      [latitude]="passenger.latitude"
-      [longitude]="passenger.longitude"
-      [markerDraggable]="true"
-      [markerClickable]="true"
-      (dragEnd)="markerDragEnd($event)"
-      (markerClick)="clickedMarker(infoWindow)"
+    <agm-marker *ngFor="let driver of driverCoordinatesArray"
+                [latitude]="driver.latitude!"
+                [longitude]="driver!.longitude!"
+                [markerDraggable]="false"
+                [markerClickable]="true"
+                (dragEnd)="markerDragEnd($event)"
+                (markerClick)="clickedMarker(infoWindowDriver)"
+                [iconUrl]="'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|9013fe'"
     >
-      <agm-info-window #infoWindow>
+      <agm-info-window #infoWindowDriver>
+        <strong>DriverName: {{driver.name}}</strong>
+      </agm-info-window>
+    </agm-marker>
+    <agm-marker *ngFor="let passenger of passengerCoordinatesArray"
+                [latitude]="passenger.latitude"
+                [longitude]="passenger.longitude"
+                [markerDraggable]="true"
+                [markerClickable]="true"
+                (dragEnd)="markerDragEnd($event)"
+                (markerClick)="clickedMarker(infoWindow)"
+                [iconUrl]="'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|d0021b'"
+
+    >
+      <agm-info-window [isOpen]="false" #infoWindow>
         <strong>passengerName: {{passenger.name}}</strong>
       </agm-info-window>
     </agm-marker>
-    <agm-polyline (lineClick)="lineClick($event)" [editable]="true" [clickable]="true" [visible]="true" [strokeWeight]="7" [strokeColor]="'#07b57a'">
-
-      <agm-polyline-point *ngFor="let coordinate of passengerCoordinatesArray"
-                          [latitude]="coordinate.latitude" [longitude]="coordinate.longitude"></agm-polyline-point>
+    <agm-polyline (lineClick)="lineClick($event)" [editable]="false" [clickable]="true" [visible]="true"
+                  [strokeWeight]="3" [strokeColor]="'#4fa91e8c'" *ngFor="let route of routes index as i"
+    >
+      <agm-icon-sequence
+        [path]="'FORWARD_OPEN_ARROW'"
+        [rotation]="2"
+        [fixedRotation]="false"
+        [offset]="'100'"
+      >
+      </agm-icon-sequence>
+        <agm-polyline-point
+          [latitude]="route.driverLatitude" [longitude]="route.driverLongitude">
+        </agm-polyline-point>
+      <agm-polyline-point
+        [latitude]="route.passengerLatitude" [longitude]="route.passengerLongitude">
+      </agm-polyline-point>
     </agm-polyline>
   </agm-map>
   <pre></pre>
@@ -65,4 +92,3 @@
     Find latitude and longitude
   </button>
 </div>
-

@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {AdminService} from "../_services/admin.service";
-import {Driver} from "../model/driver.model";
+import {AdminService} from "../../_services/admin.service";
+import {Driver} from "../../model/driver.model";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
-import {ConfirmationDialogService} from "../service/confirmation-dialog.service";
+import {ConfirmationDialogService} from "../../_services/confirmation-dialog.service";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {DriverDialogComponent} from "../driver-dialog/driver-dialog.component";
-import {PassengerDialogComponent} from "../Passenger-Logic/passenger-dialog/passenger-dialog.component";
+import {PassengerDialogComponent} from "../../Passenger-Logic/passenger-dialog/passenger-dialog.component";
 
 @Component({
   selector: 'app-driver',
@@ -29,10 +29,8 @@ export class DriverComponent implements OnInit {
     this.adminService.getAllDrivers()
       .subscribe(
         (result) => {
-          result.forEach((value) => {
-              this.drivers.push(value);
-            }
-          )
+          this.drivers = result;
+          console.log(this.drivers);
         }
       )
   }

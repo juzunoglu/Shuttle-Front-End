@@ -3,13 +3,14 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {PassengerModel} from "../../model/passenger.model";
 import {PassengerService} from "../../_services/passenger.service";
-import {ConfirmationDialogService} from "../../service/confirmation-dialog.service";
+import {ConfirmationDialogService} from "../../_services/confirmation-dialog.service";
 import {MatSort} from "@angular/material/sort";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {DriverDialogComponent} from "../../driver-dialog/driver-dialog.component";
+import {DriverDialogComponent} from "../../driver-logic/driver-dialog/driver-dialog.component";
 import {Driver} from "../../model/driver.model";
 import {AdminService} from "../../_services/admin.service";
 import {PassengerDialogComponent} from "../passenger-dialog/passenger-dialog.component";
+import {AssignedDriverViewComponent} from "../../driver-logic/assigned-driver-view/assigned-driver-view.component";
 
 @Component({
   selector: 'app-passenger-info',
@@ -114,12 +115,12 @@ export class PassengerInfoComponent implements OnInit, AfterViewInit {
     });
   }
 
-  viewAssignedDrivers(id: string) {
+  viewAssignedDrivers(passenger: PassengerModel) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
-    dialogConfig.data = id;
-    dialogConfig.height = '30%'
-    const dialogRef = this.dialog.open(PassengerDialogComponent, dialogConfig);
+    dialogConfig.data = passenger;
+    dialogConfig.height = '50%'
+    const dialogRef = this.dialog.open(AssignedDriverViewComponent, dialogConfig);
     // dialogRef.afterOpened().subscribe(() => {
     //   this.driverService.getDriverByPassengerId(id)
     //     .subscribe((driver: Driver) => console.log(driver))

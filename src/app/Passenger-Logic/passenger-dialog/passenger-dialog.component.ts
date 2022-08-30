@@ -4,7 +4,7 @@ import {PassengerModel} from "../../model/passenger.model";
 import {AdminService} from "../../_services/admin.service";
 import {Driver} from "../../model/driver.model";
 import {PassengerService} from "../../_services/passenger.service";
-import {ConfirmationDialogService} from "../../service/confirmation-dialog.service";
+import {ConfirmationDialogService} from "../../_services/confirmation-dialog.service";
 
 @Component({
   selector: 'app-passenger-dialog',

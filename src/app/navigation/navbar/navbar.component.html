@@ -1,0 +1,58 @@
+<!--<div class="container">-->
+<!--  <mat-sidenav-container>-->
+<!--    <mat-sidenav #sidenav role="navigation">-->
+<!--      <app-sidenav-list (sidenavClose)="sidenav.close()"></app-sidenav-list>-->
+<!--    </mat-sidenav>-->
+
+<!--    <mat-sidenav-content>-->
+<!--      <app-header (sidenavToggle)="sidenav.toggle()"></app-header>-->
+<!--      <main>-->
+<!--        <router-outlet></router-outlet>-->
+<!--      </main>-->
+<!--    </mat-sidenav-content>-->
+
+<!--  </mat-sidenav-container>-->
+<!--</div>-->
+
+
+<div id="app">
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <a href="#" class="navbar-brand">ShuttleInfo</a>
+    <ul class="navbar-nav mr-auto" routerLinkActive="active">
+      <li class="nav-item">
+        <a href="/home" class="nav-link" *ngIf="isLoggedIn" routerLink="home">Home</a>
+      </li>
+      <li class="nav-item" *ngIf="showAdminBoard">
+        <a href="/admin" class="nav-link" routerLink="admin">Create Driver</a>
+      </li>
+      <li class="nav-item">
+        <a href="/driver" class="nav-link" *ngIf="isLoggedIn" routerLink="driver">Driver-Information</a>
+      </li>
+      <li class="nav-item">
+        <a href="/create-passenger" class="nav-link" *ngIf="isLoggedIn"  routerLink="create-passenger">Create Passenger</a>
+      </li>
+      <li class="nav-item">
+        <a href="/info-passenger" class="nav-link" *ngIf="isLoggedIn"  routerLink="info-passenger">Passenger Information</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
+      <li class="nav-item">
+        <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
+      </li>
+      <li class="nav-item">
+        <a href="/login" class="nav-link" routerLink="login">Sign-In</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
+      <li class="nav-item">
+        <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
+      </li>
+      <li class="nav-item">
+        <a href class="nav-link" (click)="logOut()">Logout</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
+</div>

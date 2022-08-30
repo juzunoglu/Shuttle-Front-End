@@ -8,8 +8,8 @@ export class Driver {
   phoneNumber: number | undefined;
   experience: string | undefined;
   email: string | undefined;
-  latitude: number | undefined;
-  longitude: number | undefined;
+  latitude?: number;
+  longitude?: number;
   carPhoto: any;
   carMake: string | undefined;
   carModel: string | undefined;

@@ -3,7 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AdminService} from "../_services/admin.service";
 import {HttpEventType, HttpResponse} from "@angular/common/http";
 import {Driver} from "../model/driver.model";
-import {ConfirmationDialogService} from "../service/confirmation-dialog.service";
+import {ConfirmationDialogService} from "../_services/confirmation-dialog.service";
 import {AgmMarker} from "@agm/core";
 
 @Component({

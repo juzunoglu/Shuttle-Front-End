@@ -5,6 +5,7 @@ import {MatDatepicker, MatDatepickerInputEvent} from "@angular/material/datepick
 import {PassengerModel} from "../model/passenger.model";
 import PolyMouseEvent = google.maps.PolyMouseEvent;
 import {Driver} from "../model/driver.model";
+import {RouteModel} from "../model/route.model";
 
 @Component({
   selector: 'app-maps',
@@ -23,6 +24,8 @@ export class MapsComponent implements OnInit {
 
   @Input() passengerCoordinatesArray: PassengerModel[] = [];
   @Input() driverCoordinatesArray: Driver[] = [];
+
+  @Input() routes: RouteModel[] = [];
 
   address: string | undefined = "";
   comingDates: Date[] = []
@@ -95,19 +98,21 @@ export class MapsComponent implements OnInit {
     this.mapsAPILoader.load().then(() => {
       // this.setCurrentLocation();
       this.geoCoder = new google.maps.Geocoder;
-      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement);
-      autocomplete.addListener("place_changed", () => {
-        this.ngZone.run(() => {
-          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
-          }
-          this.latitude = place.geometry.location.lat();
-          this.longitude = place.geometry.location.lng();
-          this.address = place.formatted_address;
-          this.zoom = 12;
+      if (this.canSearch) {
+        let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement);
+        autocomplete.addListener("place_changed", () => {
+          this.ngZone.run(() => {
+            let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+            if (place.geometry === undefined || place.geometry === null) {
+              return;
+            }
+            this.latitude = place.geometry.location.lat();
+            this.longitude = place.geometry.location.lng();
+            this.address = place.formatted_address;
+            this.zoom = 12;
+          });
         });
-      });
+      }
     });
   }
 

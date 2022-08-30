@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse, HttpEvent, HttpHeaders, HttpRequest} from
 import {catchError, from, Observable, tap, throwError} from "rxjs";
 import {Driver} from "../model/driver.model";
 import {PassengerModel} from "../model/passenger.model";
+import {RouteModel} from "../model/route.model";
 
 const ADMIN_API = 'http://localhost:8080/api/v1/driver';
 
@@ -51,6 +52,13 @@ export class AdminService {
       );
   }
 
+  getDriverByPassengerId(id: string): Observable<Driver> {
+    return this.http.get<Driver>(`${ADMIN_API}/getAssignedDriverByPassengerId/${id}`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
 
   deleteDriver(id: string): Observable<boolean> {
     return this.http.delete<boolean>(`${ADMIN_API}/delete/${id}`)
@@ -61,6 +69,13 @@ export class AdminService {
 
   getDriverPhoto(id: string): Observable<any> {
     return this.http.get(`${ADMIN_API}/carPhoto/${id}`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getRoutes(): Observable<RouteModel[]> {
+    return this.http.get<RouteModel[]>(`${ADMIN_API}/getRoutes`)
       .pipe(
         catchError(this.handleError)
       );

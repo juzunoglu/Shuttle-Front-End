@@ -8,7 +8,7 @@ import {AppComponent} from './app.component';
 import {AgmCoreModule} from "@agm/core";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
-import {ConfirmationDialogComponent} from './confirmation-dialog/confirmation-dialog.component';
+import {ConfirmationDialogComponent} from './_helpers/confirmation-dialog/confirmation-dialog.component';
 import {MapsComponent} from './maps/maps.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
@@ -38,7 +38,7 @@ import {MatDividerModule} from "@angular/material/divider";
 import {MatListModule} from "@angular/material/list";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {AgmDrawingModule} from "@agm/drawing";
-import {DriverComponent} from './driver/driver.component';
+import {DriverComponent} from './driver-logic/driver/driver.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatSliderModule} from "@angular/material/slider";
@@ -49,8 +49,14 @@ import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatSortModule} from "@angular/material/sort";
-import { DriverDialogComponent } from './driver-dialog/driver-dialog.component';
+import { DriverDialogComponent } from './driver-logic/driver-dialog/driver-dialog.component';
 import { PassengerDialogComponent } from './Passenger-Logic/passenger-dialog/passenger-dialog.component';
+import {MatSidenavModule} from "@angular/material/sidenav";
+import { NavbarComponent } from './navigation/navbar/navbar.component';
+import { HeaderComponent } from './navigation/header/header.component';
+import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
+import {MatMenuModule} from "@angular/material/menu";
+import { AssignedDriverViewComponent } from './driver-logic/assigned-driver-view/assigned-driver-view.component';
 
 
 @NgModule({
@@ -69,6 +75,10 @@ import { PassengerDialogComponent } from './Passenger-Logic/passenger-dialog/pas
     PassengerInfoComponent,
     DriverDialogComponent,
     PassengerDialogComponent,
+    NavbarComponent,
+    HeaderComponent,
+    SidenavListComponent,
+    AssignedDriverViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -117,6 +127,8 @@ import { PassengerDialogComponent } from './Passenger-Logic/passenger-dialog/pas
     MatPaginatorModule,
     MatTooltipModule,
     MatSortModule,
+    MatSidenavModule,
+    MatMenuModule,
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent],
