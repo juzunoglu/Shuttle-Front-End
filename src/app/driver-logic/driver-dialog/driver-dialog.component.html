@@ -2,7 +2,9 @@
 <div mat-dialog-content>
   <mat-selection-list #selectedlist [multiple]="false">
     <mat-list-option *ngFor="let driver of drivers!" [value]="driver">
-      {{driver.name}}
+      Name: {{driver.name}}
+      #Number: {{driver.phoneNumber}}
+      <mat-divider [inset]="true"></mat-divider>
     </mat-list-option>
   </mat-selection-list>
 </div>

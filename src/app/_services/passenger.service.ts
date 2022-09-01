@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {PassengerModel} from "../model/passenger.model";
 import {catchError, Observable, throwError} from "rxjs";
-import {Driver} from "../model/driver.model";
 
 const PASSENGER_API = 'http://localhost:8080/api/v1/passenger';
 
@@ -23,6 +22,13 @@ export class PassengerService {
 
   deletePassenger(id: string): Observable<boolean> {
     return this.http.delete<boolean>(`${PASSENGER_API}/delete/${id}`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  updatePassenger(id: string, passenger: PassengerModel): Observable<PassengerModel> {
+    return this.http.put<PassengerModel>(`${PASSENGER_API}/update/${id}`, passenger)
       .pipe(
         catchError(this.handleError)
       );

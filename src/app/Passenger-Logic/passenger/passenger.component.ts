@@ -3,7 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ConfirmationDialogService} from "../../_services/confirmation-dialog.service";
 import {PassengerModel} from "../../model/passenger.model";
 import {PassengerService} from "../../_services/passenger.service";
-import {MatDialogRef} from "@angular/material/dialog";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-passenger',
@@ -22,6 +22,7 @@ export class PassengerComponent implements OnInit {
   constructor(private readonly fb: FormBuilder,
               private readonly confirmationDialogService: ConfirmationDialogService,
               private readonly passengerService: PassengerService,
+              private readonly snackBar: MatSnackBar,
   ) {
   }
 
@@ -47,11 +48,18 @@ export class PassengerComponent implements OnInit {
             longitude: this.passengerLongitude?.value
           }
           this.passengerService.createPassenger(this.passenger)
-            .subscribe((res) => {
+            .subscribe(() => {
               this.passengerForm.reset();
             });
         }
-      });
+      }).finally(() => {
+        this.snackBar.open('Passenger is saved successfully!: ', 'Dismiss', {
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          duration: 2000,
+          panelClass: ['mat-toolbar', 'mat-primary']
+        });
+    });
   }
 
 

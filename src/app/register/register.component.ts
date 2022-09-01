@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../_services/auth.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -14,9 +15,12 @@ export class RegisterComponent implements OnInit {
 
   // @ts-ignore
   registerForm: FormGroup;
+  public showPassword: boolean = false;
+
 
   constructor(private authService: AuthService,
-              private fb: FormBuilder
+              private fb: FormBuilder,
+              private readonly router: Router,
   ) {
   }
 
@@ -41,6 +45,14 @@ export class RegisterComponent implements OnInit {
         Validators.maxLength(25)
       ])
     });
+  }
+
+  public togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  public onAlreadyRegistered() {
+    this.router.navigate(['/login'])
   }
 
   get username() {

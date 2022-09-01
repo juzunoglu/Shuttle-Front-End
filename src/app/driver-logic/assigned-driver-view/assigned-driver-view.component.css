@@ -1,7 +1,11 @@
 .assigned-image {
   margin-top: 16px;
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
-  position: center;
+}
+.assigned-driver-card {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }

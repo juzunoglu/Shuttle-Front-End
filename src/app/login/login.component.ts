@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../_services/auth.service';
 import {TokenStorageService} from '../_services/token-storage.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
@@ -25,10 +25,10 @@ export class LoginComponent implements OnInit {
   // @ts-ignore
   loginForm: FormGroup;
 
-  constructor(private authService: AuthService,
-              private tokenStorage: TokenStorageService,
-              private fb: FormBuilder,
-              private router: Router
+  constructor(private readonly authService: AuthService,
+              private readonly tokenStorage: TokenStorageService,
+              private readonly fb: FormBuilder,
+              private readonly router: Router
   ) {
 
   }
@@ -63,6 +63,11 @@ export class LoginComponent implements OnInit {
         Validators.maxLength(25)
       ])
     });
+  }
+
+  public onDontHaveAccount() {
+    this.router.navigate(['/register'])
+
   }
 
   get username() {

@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {AdminService} from "../../_services/admin.service";
 import {Driver} from "../../model/driver.model";
-import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {ConfirmationDialogService} from "../../_services/confirmation-dialog.service";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {DriverDialogComponent} from "../driver-dialog/driver-dialog.component";
 import {PassengerDialogComponent} from "../../Passenger-Logic/passenger-dialog/passenger-dialog.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-driver',
@@ -22,6 +21,7 @@ export class DriverComponent implements OnInit {
   constructor(private readonly adminService: AdminService,
               private readonly confirmationDialogService: ConfirmationDialogService,
               private readonly dialog: MatDialog,
+              private readonly snackBar: MatSnackBar,
   ) {
   }
 
@@ -46,7 +46,11 @@ export class DriverComponent implements OnInit {
               this.drivers.splice(index, 1);
             })
         }
-      });
+      })
+  }
+
+  onClickEdit(driver: Driver) {
+    console.log(driver);
   }
 
   viewPassengers(driver: Driver) {
@@ -55,7 +59,7 @@ export class DriverComponent implements OnInit {
     dialogConfig.height = '40%'
     dialogConfig.width = '35%'
     dialogConfig.data = driver
-    const dialogRef = this.dialog.open(PassengerDialogComponent, dialogConfig);
+    this.dialog.open(PassengerDialogComponent, dialogConfig);
   }
 
 }

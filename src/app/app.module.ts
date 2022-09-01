@@ -57,6 +57,7 @@ import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import {MatMenuModule} from "@angular/material/menu";
 import { AssignedDriverViewComponent } from './driver-logic/assigned-driver-view/assigned-driver-view.component';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 
 @NgModule({
@@ -129,6 +130,7 @@ import { AssignedDriverViewComponent } from './driver-logic/assigned-driver-view
     MatSortModule,
     MatSidenavModule,
     MatMenuModule,
+    MatSnackBarModule,
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent],

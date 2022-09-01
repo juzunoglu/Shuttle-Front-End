@@ -1,19 +1,23 @@
-<h1 mat-dialog-title style="text-align: center">Assigned driver to the passenger: {{passenger!.name!}}</h1>
-<div mat-dialog-content *ngIf="assignedDriver.name !== undefined ">
-    <mat-card-header style="position: center">
-      <mat-card-title class="title_center">Name: {{assignedDriver.name}}</mat-card-title>
-    </mat-card-header>
-    <img mat-card-image class="assigned-image" [src]="'data:image/jpg;base64,' + assignedDriver.carPhoto" alt="Driver's car photo">
-    <mat-card-content>
-      <p>
-        Age: {{assignedDriver.age}} <br>
-        Phone Number: {{assignedDriver.phoneNumber}}<br>
-        Experience: {{assignedDriver.experience}}<br>
-        Email: {{assignedDriver.email}}<br>
-        Car Model: {{assignedDriver.carModel}}<br>
-        Car Make: {{assignedDriver.carMake}}<br>
-        Car Tag: {{assignedDriver.carTag}}<br>
-      </p>
-    </mat-card-content>
-
+<h1 mat-dialog-title style="text-align: center">{{passenger!.name!}} is assigned to driver below</h1>
+<div mat-dialog-content class="assigned-driver-card" *ngIf="assignedDriver.name !== undefined; else noAssignedDriver">
+  <mat-card-header style="position: center">
+    <mat-card-title class="title_center">Name: {{assignedDriver.name}}</mat-card-title>
+  </mat-card-header>
+  <img mat-card-image class="assigned-image" [src]="'data:image/jpg;base64,' + assignedDriver.carPhoto"
+       alt="Driver's car photo">
+  <mat-card-content>
+    <p>
+      Age: {{assignedDriver.age}} <br>
+      Phone Number: {{assignedDriver.phoneNumber}}<br>
+      Experience: {{assignedDriver.experience}}<br>
+      Email: {{assignedDriver.email}}<br>
+      Car Model: {{assignedDriver.carModel}}<br>
+      Car Make: {{assignedDriver.carMake}}<br>
+      Car Tag: {{assignedDriver.carTag}}<br>
+    </p>
+  </mat-card-content>
 </div>
+
+<ng-template #noAssignedDriver>
+  <p style="text-align: center"> No driver is assigned to the passenger: <strong>{{passenger!.name!}}</strong></p>
+</ng-template>

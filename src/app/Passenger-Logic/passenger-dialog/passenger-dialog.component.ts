@@ -5,6 +5,7 @@ import {AdminService} from "../../_services/admin.service";
 import {Driver} from "../../model/driver.model";
 import {PassengerService} from "../../_services/passenger.service";
 import {ConfirmationDialogService} from "../../_services/confirmation-dialog.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-passenger-dialog',
@@ -22,6 +23,7 @@ export class PassengerDialogComponent implements OnInit {
     private readonly driverService: AdminService,
     private readonly passengerService: PassengerService,
     private readonly confirmationDialogService: ConfirmationDialogService,
+    private readonly snackBar: MatSnackBar,
   ) {
     this.driver = data;
   }
@@ -45,6 +47,13 @@ export class PassengerDialogComponent implements OnInit {
         }
       }).then(() => {
         window.location.reload();
-    })
+    }).finally(() => {
+      this.snackBar.open('Passenger is un-assigned successfully!', 'Dismiss', {
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        duration: 2000,
+        panelClass: ['mat-toolbar', 'mat-primary']
+      });
+    });
   }
 }

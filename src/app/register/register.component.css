@@ -1,21 +1,32 @@
-:host {
+mat-card {
+  padding: 50px;
+  margin: 100px;
+}
+.my-class {
   display: flex;
   justify-content: center;
-  margin: 100px 0;
 }
-
 .mat-form-field {
   width: 100%;
   min-width: 300px;
 }
 
-mat-card-title,
-mat-card-content {
-  display: flex;
-  justify-content: center;
+.mat-card {
+  box-shadow: 0 0 10px 0 #9b9b9b,
+  0 1px 1px 0 #9b9b9b,
+  0 1px 3px 0 #9b9b9b;
 }
 
-.button {
+.google-sign-in {
   display: flex;
-  justify-content: flex-end;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
+.custom-g {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+

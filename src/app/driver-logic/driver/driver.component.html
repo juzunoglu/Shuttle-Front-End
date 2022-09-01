@@ -27,8 +27,9 @@
                   </p>
         </mat-card-content>
         <mat-card-actions align="end">
-          <button color="primary" mat-button (click)="viewPassengers(driver)">View Passengers</button>
-          <button color="warn" mat-button (click)=deleteOnClick(driver.id!)>Delete</button>
+          <button color="primary" mat-button matTooltip="View assigned passengers" (click)="viewPassengers(driver)">View</button>
+          <button color="primary" mat-button matTooltip="Edit driver" (click)="onClickEdit(driver)">Edit</button>
+          <button color="warn" mat-button matTooltip="Delete driver" (click)=deleteOnClick(driver.id!)>Delete</button>
         </mat-card-actions>
       </mat-card>
     </div>

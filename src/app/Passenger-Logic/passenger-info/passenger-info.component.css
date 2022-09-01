@@ -3,7 +3,7 @@ table {
   padding: 50px;
 }
 .mat-row:hover {
-  background-color: lightblue;
+  background-color: #E7F9F0;
 }
 
 :host ::ng-deep .mat-sort-header-container {
@@ -13,4 +13,12 @@ table {
 
 th.mat-header-cell, td.mat-cell {
   text-align: center;
+}
+
+tr:hover {
+  background: #E9CBFF;
+}
+mat-form-field {
+  max-width: 150px;
+  /*min-width: 50px;*/
 }
